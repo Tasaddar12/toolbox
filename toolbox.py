@@ -34,7 +34,7 @@ class Window(tk.Tk):
 			_thread.exit()
 			exit()
 		##########################Labels##############################
-		#URL Label
+      #URL Label
 		self.label = tk.Label(self, text="Input URL then select attack: ")
 		self.label.grid(column=0, row=0, sticky="e")
 		#Thread Label
@@ -53,9 +53,12 @@ class Window(tk.Tk):
 		#DNS Forwarding
 		self.button = tk.Button(self, text="DNS Forward", command=dns_forward)
 		self.button.grid(row=2, column=0, sticky="nsew")
+		#XSS Checker
+		self.xss = tk.Button(self, text="XSS Checker", command=coming_soon)
+		self.xss.grid(row=3, column=0, sticky="nsew")
 		#Notes
 		self.note = tk.Button(self, text="Notes", command=note)
-		self.note.grid(row=3, column=0, sticky="s")
+		self.note.grid(row=5, column=0, sticky="s")
 		#Close Button
 		self.quit = tk.Button(self, text="Cancel", command=quit)
 		self.quit.grid(row=6, column=0, sticky="s")
