@@ -3,7 +3,7 @@ import sys, os, _thread
 sys.path.append(os.path.abspath("tools/"))
 from spider import spider_start
 from notes import notes_start
-from dns_subdomain_search import dns_start
+from dns_zone_transfer import nslookup
 import tkinter as tk
 from tkinter import ttk
 #create a window
@@ -25,7 +25,7 @@ class Window(tk.Tk):
 				print("error")
 		#DNS Forward
 		def dns_forward():
-			_thread.start_new_thread(dns_start, (url.get(), thread.get(),))
+			_thread.start_new_thread(nslookup, (url.get(),))
 		#Notes
 		def note():
 			_thread.start_new_thread(notes_start, ())
@@ -35,7 +35,7 @@ class Window(tk.Tk):
 			exit()
 		##########################Labels##############################
       #URL Label
-		self.label = tk.Label(self, text="Input URL then select attack: ")
+		self.label = tk.Label(self, text="Input URL or Domain then select attack: ")
 		self.label.grid(column=0, row=0, sticky="e")
 		#Thread Label
 		self.label = tk.Label(self, text="Input Thread Count: ")
