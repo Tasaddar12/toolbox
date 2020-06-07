@@ -1,6 +1,7 @@
 import re, os, requests, sys
 from bs4 import BeautifulSoup
 from multiprocessing.pool import ThreadPool as Pool
+import urllib.parse
 
 def xss_start(url, thread):
 	#Setting Some Variables
@@ -51,13 +52,18 @@ def xss_do(url, thread):
 		
 #Attack the possible injectable parameter
 def xss_attack(url, inject):
-	if re.search(inject, requests.get(url[0] + "?" + url[1] + "=" + inject, timeout=5).text):
-		print(url[0] + "?" + url[1] + "=" + inject + " : Might Be Injectable", end="\n")
+	param = {url[1] : repr(inject)}
+	inject_e = urllib.parse.urlencode(param)
+
+	if re.search(inject, requests.get(url[0] + "?" + inject_e, timeout=5).text):
+		print("\n" + url[0] + "?" + url[1] + "=" + repr(inject), end="\n")
+		f = open("Logs/xss_" + rawdomain + ".txt", 'a')
+		f.write(url[0] + "?" + inject_e + "\n")
+		f.close()
 	else:
 		#Progress as well :)
-		print("Progress : ", end='')
-		print("{0}\r".format(xss_file.index(inject)), end='')
-		print(" / {0}".format(len(xss_file)))
+		print(f"\rProgress : {xss_file.index(inject)} / {len(xss_file)}", end='')
+		
 #Main Threading
 def threading_pool(thread):
 	try:
