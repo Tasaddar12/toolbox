@@ -1,6 +1,9 @@
 import dns.resolver, dns.query, dns.zone, re
 
 def nslookup(domain):
+	domain = re.sub(r"\/$", "", domain)
+	domain = re.sub(r"^(https://|http://)", "", domain)
+	
 	answers = dns.resolver.resolve(domain, "NS")
 	for rdata in answers:
 		dnsserver = re.sub(r"\.$", "", str(rdata.target))

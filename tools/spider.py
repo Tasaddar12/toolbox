@@ -38,7 +38,8 @@ def crawl(url):
 	#add to log file
 	spider_log = open("Logs/Spider_log_" + rawdomain, 'a')
 	if re.search(r"(\?|\=)", url):
-		spider_log.write(url + " : " +  str(requests.get(url).status_code) + " DYNAMIC\n")
+		with open("Logs/Dynamic_URL_" + rawdomain, 'a') as dynamic:
+			dynamic.write(url + "\n")
 	else:
 		spider_log.write(url + " : " + str(requests.get(url).status_code) + "\n")
 	spider_log.close()
