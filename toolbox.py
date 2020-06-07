@@ -4,6 +4,7 @@ sys.path.append(os.path.abspath("tools/"))
 from spider import spider_start
 from notes import notes_start
 from dns_zone_transfer import nslookup
+from xss_tester import xss_start
 import tkinter as tk
 from tkinter import ttk
 #create a window
@@ -19,13 +20,13 @@ class Window(tk.Tk):
 			print("coming soon")
 		#Spider
 		def spider():
-			try:
-				_thread.start_new_thread(spider_start, (url.get(), thread.get(), loop.get(), depth.get(),))
-			except:
-				print("error")
+			_thread.start_new_thread(spider_start, (url.get(), thread.get(), loop.get(), depth.get(),))
 		#DNS Forward
 		def dns_forward():
 			_thread.start_new_thread(nslookup, (url.get(),))
+		#XSS Tester
+		def xss_tester():
+			_thread.start_new_thread(xss_start, (url.get(), thread.get(),))
 		#Notes
 		def note():
 			_thread.start_new_thread(notes_start, ())
@@ -54,7 +55,7 @@ class Window(tk.Tk):
 		self.button = tk.Button(self, text="DNS Forward", command=dns_forward)
 		self.button.grid(row=2, column=0, sticky="nsew")
 		#XSS Checker
-		self.xss = tk.Button(self, text="XSS Checker", command=coming_soon)
+		self.xss = tk.Button(self, text="XSS Checker", command=xss_tester)
 		self.xss.grid(row=3, column=0, sticky="nsew")
 		#Notes
 		self.note = tk.Button(self, text="Notes", command=note)
@@ -66,6 +67,7 @@ class Window(tk.Tk):
 		#URL Input
 		url = tk.Entry(self, width=50, borderwidth=5)
 		url.grid(row=0, column=1)
+		url.focus_set()
 		#Thread Input
 		thread = tk.Entry(self, width=5, borderwidth=5)
 		thread.grid(row=0, column=3)
