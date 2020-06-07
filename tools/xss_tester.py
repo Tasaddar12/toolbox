@@ -42,7 +42,7 @@ def xss_start(url, thread):
 
 	#Start Attacking
 	threading_pool(int(thread))
-	print("\x1b[1;36;40mFINISHED\x1b[0;38;40m")
+	print("\n\x1b[1;36;40mFINISHED\x1b[0;38;40m\n")
 	
 #Locate injectables
 def xss_do(url, thread):
@@ -54,16 +54,19 @@ def xss_do(url, thread):
 def xss_attack(url, inject):
 	param = {url[1] : repr(inject)}
 	inject_e = urllib.parse.urlencode(param)
-
-	if re.search(inject, requests.get(url[0] + "?" + inject_e, timeout=5).text):
-		print("\n" + url[0] + "?" + url[1] + "=" + repr(inject), end="\n")
-		f = open("Logs/xss_" + rawdomain + ".txt", 'a')
-		f.write(url[0] + "?" + inject_e + "\n")
-		f.close()
-	else:
-		#Progress as well :)
-		print(f"\rProgress : {xss_file.index(inject)} / {len(xss_file)}", end='')
-		
+	try:
+		if re.search(inject, requests.get(url[0] + "?" + inject_e, timeout=5).text):
+			print("\n" + url[0] + "?" + url[1] + "=" + repr(inject), end="\n")
+			f = open("Logs/xss_" + rawdomain + ".txt", 'a')
+			f.write(url[0] + "?" + inject_e + "\n")
+			f.close()
+		else:
+			#Progress as well :)
+			print(f"\rProgress : {xss_file.index(inject)} / {len(xss_file)}", end='')
+	except:
+		print("error\n")
+		pass
+			
 #Main Threading
 def threading_pool(thread):
 	try:
