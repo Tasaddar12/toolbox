@@ -1,10 +1,11 @@
 #imports
 import sys, os, _thread
 sys.path.append(os.path.abspath("tools/"))
-from spider import spider_start
-from notes import notes_start
-from dns_zone_transfer import nslookup
+from tools.spider import Spider
+from tools.notes import Notes
+from tools.dns_zone_transfer import DNSAttacks
 from xss_tester import xss_start
+
 import tkinter as tk
 from tkinter import ttk
 #create a window
@@ -20,16 +21,16 @@ class Window(tk.Tk):
 			print("coming soon")
 		#Spider
 		def spider():
-			_thread.start_new_thread(spider_start, (url.get(), thread.get(), loop.get(), depth.get(),))
+			_thread.start_new_thread(Spider.spiderinit, (url.get(), thread.get(), loop.get(), depth.get(),))
 		#DNS Forward
 		def dns_forward():
-			_thread.start_new_thread(nslookup, (url.get(),))
+			_thread.start_new_thread(DNSAttacks.nslookup, (url.get(),))
 		#XSS Tester
 		def xss_tester():
 			_thread.start_new_thread(xss_start, (url.get(), thread.get(),))
 		#Notes
 		def note():
-			_thread.start_new_thread(notes_start, ())
+			_thread.start_new_thread(Notes.notes_start, ())
 		#Quit
 		def quit():
 			_thread.exit()
@@ -83,3 +84,4 @@ class Window(tk.Tk):
 #enter mainloop for window
 window = Window()
 window.mainloop()
+
