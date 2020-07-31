@@ -7,9 +7,10 @@ class DNSAttacks:
 		domain = HTTPParse.rawdomain_parse(domain)
 		#Attempt to resolve dns
 		try:
-			answers = dns.resolver.resolve(domain, "NS")
+			resol = dns.resolver.Resolver()
+			answers = resol.query(domain, "NS")
 		except:
-			answers = dns.resolver(domain, "NS")
+			raise
 			pass
 		#Start to filter the data
 		for rdata in answers:
@@ -33,5 +34,4 @@ class DNSAttacks:
 				print("error")
 				pass
 		print("FINISHED")
-
 
