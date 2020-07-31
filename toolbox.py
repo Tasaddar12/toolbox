@@ -5,6 +5,7 @@ from tools.spider import Spider
 from tools.notes import Notes
 from tools.dns_zone_transfer import DNSAttacks
 from xss_tester import xss_start
+from tools.brute import *
 
 import tkinter as tk
 from tkinter import ttk
@@ -31,6 +32,9 @@ class Window(tk.Tk):
 		#Notes
 		def note():
 			_thread.start_new_thread(Notes.notes_start, ())
+		#BruteForcer_Subdomain
+		def subdomain():
+			_thread.start_new_thread(subBrute.Start, (url.get(), thread.get(),))
 		#Quit
 		def quit():
 			_thread.exit()
@@ -58,6 +62,9 @@ class Window(tk.Tk):
 		#XSS Checker
 		self.xss = tk.Button(self, text="XSS Checker", command=xss_tester)
 		self.xss.grid(row=3, column=0, sticky="nsew")
+		#Subdomain Brute
+		self.subbr = tk.Button(self, text="Subdomain brute", command=subdomain)
+		self.subbr.grid(row=4, column=0, sticky="nsew")
 		#Notes
 		self.note = tk.Button(self, text="Notes", command=note)
 		self.note.grid(row=5, column=0, sticky="s")
