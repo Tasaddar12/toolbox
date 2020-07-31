@@ -34,7 +34,7 @@ class subBrute:
 		try:
 			ip = socket.gethostbyname(lists + '.' + HTTPParse.rawdomain_parse(urls))
 			print("{0} : {1}".format(ip, (lists + '.' + HTTPParse.rawdomain_parse(urls))))
-			with open("Logs/subdomains_" + HTTPParse.rawdomain_parse(urls)) as log:
+			with open("Logs/subdomains_" + HTTPParse.rawdomain_parse(urls), "a") as log:
 				log.write(lists + '.' + HTTPParse.rawdomain_parse(urls) + " : " + ip + "\n")
 		except:
 			pass
